@@ -4,6 +4,6 @@ const user = require("./userRoutes");
 router.get("/", (req, res) => {
   res.json("Welcome");
 });
-router.use("/users",user);
+router.use("/user",user);
 
 module.exports = router;
