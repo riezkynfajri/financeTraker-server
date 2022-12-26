@@ -22,7 +22,7 @@ const start = async () => {
     await mongoose.connect(
       "mongodb+srv://riezkyn:f1n4nc3Tr4ck1ng@financetrackdb.i9a3n6r.mongodb.net/?retryWrites=true&w=majority"
     );
-    app.listen(port, () => console.log("Server started on port 3000"));
+    app.listen(port, () => console.log("Server started on port", port));
   } catch (error) {
     console.error(error);
     process.exit(1);

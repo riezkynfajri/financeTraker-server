@@ -1,17 +1,24 @@
+const { comparePass, createToken } = require("../helpers/validators");
 const User = require("../models/User");
 
 module.exports = class UserController {
-  static async getUsers(req, res, next) {
+  static async login(req, res, next) {
     try {
-      const users = await User.find();
-      users.forEach((el) => (el.password = undefined));
-      res.status(200).json(users);
+      const { name, password } = req.body;
+      if (!name) throw new Error('name');
+      if (!password) throw new Error('password');
+      const user = await User.findOne({ name });
+      if (!user) throw new Error('invalid');
+      if (!comparePass(password, user.password)) throw new Error('invalid'); //check the password
+      const payload = { id: user.id, name: user.name };
+      const accessToken = createToken(payload)
+      res.status(200).json({token: accessToken});
     } catch (err) {
       next(err);
     }
   }
 
-  static async addUser(req, res, next) {
+  static async register(req, res, next) {
     try {
       const { name, password } = req.body;
       await User.create({ name, password });
