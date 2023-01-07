@@ -1,6 +1,6 @@
 module.exports = function errorHandler(err, req, res, next) {
-  let code = 500;
-  let message = "Internal Server Error";
+  let code = 500,
+    message = "Internal Server Error";
   console.log(err);
   if (err.name === "ValidationError") {
     code = 400;
@@ -19,6 +19,9 @@ module.exports = function errorHandler(err, req, res, next) {
   } else if (err.message === 'invalid') {
     code = 401;
     message = 'Invalid email/password';
+  } else if (err.message === 'user not found' || err.name === 'JsonWebTokenError') {
+    code = 401;
+    message = "You're Unauthorized";
   }
 
   res.status(code).json({ error: { message } });

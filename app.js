@@ -19,9 +19,7 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://riezkyn:f1n4nc3Tr4ck1ng@financetrackdb.i9a3n6r.mongodb.net/?retryWrites=true&w=majority"
-    );
+    await mongoose.connect(`mongodb+srv://${process.env.MONGO_CRED}@financetrackdb.i9a3n6r.mongodb.net/?retryWrites=true&w=majority`);
     app.listen(port, () => console.log("Server started on port", port));
   } catch (error) {
     console.error(error);
